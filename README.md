@@ -21,11 +21,8 @@ Old links such as `index.html#/privacy` redirect to the new pages.
 
 ## Beta sign-ups
 
-`subscribe.php` needs a host that runs PHP 7.0 or newer (tested on PHP 8.4). Static hosts such as GitHub Pages cannot run it.
-
-- Check your host: open `https://your-site/subscribe.php?check=1`. It reports the PHP version, whether email can be sent (`mail`) and whether sign-ups can be saved (`storage`).
-- Sign-ups are emailed to the address in `TO_EMAIL` at the top of `subscribe.php`.
-- Every sign-up is also saved to `beta-signups.csv`, in a `stationqc-private` folder next to the site folder when the host allows it, otherwise in `data/`. If email is blocked on your host, sign-ups still succeed and are only saved there.
+- Sign-ups are handled by Formspree, so the site can remain hosted on GitHub Pages.
+- The form endpoint is configured in the `action` attribute of the beta form in `index.html`.
 - Opened from disk (`file://`), the form says it works once the site is online.
 - To invite someone: App Store Connect → TestFlight → External Testing → add their email.
 

@@ -106,7 +106,7 @@
   var form=$('#beta-form');
   if(form){
     form.elements.t.value=String(Date.now());
-    /* Result of a submission made without JavaScript (subscribe.php redirects back here). */
+    /* Result of a submission made without JavaScript (Formspree redirects back here). */
     var back=new URLSearchParams(location.search).get('beta');
     if(back){var tt=S.t(),bs=$('#beta-status');if(back==='ok'){form.classList.add('done');bs.textContent=tt.bok}else{bs.classList.add('err');bs.textContent=back==='name'?tt.berr_name:back==='email'?tt.berr_email:back==='rate'?tt.berr_rate:tt.berr_server}}
     form.addEventListener('submit',function(e){
@@ -121,7 +121,7 @@
       form.classList.add('busy');form.elements.lang.value=S.lang;
       var send=$('.send',form);send.disabled=true;st.textContent='';
       fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-        .then(function(r){return r.text().then(function(txt){try{return JSON.parse(txt)}catch(x){return {ok:false,error:'server'}}})})
+        .then(function(r){return r.text().then(function(txt){var data;try{data=JSON.parse(txt)}catch(x){data=null}return r.ok&&(!data||data.ok!==false)?{ok:true}:data||{ok:false,error:'server'}})})
         .catch(function(){return {ok:false,error:'server'}})
         .then(function(res){
           form.classList.remove('busy');send.disabled=false;
