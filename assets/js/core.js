@@ -17,7 +17,7 @@
 
   var S=window.SQC={MOTION:MOTION,reduced:reduced,hasGsap:hasGsap,lenis:null,before:[],after:[],anchors:{},
     get lang(){return lang},
-    t:function(){var o=C[lang]||C.en,x={};(o.f||[]).forEach(function(f,i){x['f'+(i+1)+'p']=f[2]});return Object.assign({},o,x)},
+    t:function(){return C[lang]||C.en},
     fmt:function(n){var s=Number(n).toFixed(1);return lang==='fr'?s.replace('.',','):s}
   };
 
@@ -29,6 +29,8 @@
     $$('[data-l]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.l===lang))});
     $$('input[name=lang]').forEach(function(i){i.value=lang});
     footer(t);
+    /* Real links, so long-press, middle-click and "copy link" all work. */
+    $$('[data-app]').forEach(function(a){a.href=APP_STORE_URL;a.target='_blank';a.rel='noopener'});
   }
   function footer(t){
     var f=$('#foot');if(!f)return;
@@ -100,11 +102,13 @@
     $$('a',nav).forEach(function(x){x.classList.toggle('on',x===a);if(x===a)x.setAttribute('aria-current','true');else x.removeAttribute('aria-current')});
     lensTo(a);
   };
-  window.addEventListener('resize',function(){if(cur){var k=cur;cur=null;var o=L.o;L.o=0;S.setTab(k);L.o=o;draw()}},{passive:true});
+  /* Tab widths change with the window and with the language, so the lens is measured again. */
+  function relens(){if(cur){var k=cur;cur=null;var o=L.o;L.o=0;S.setTab(k);L.o=o;draw()}}
+  window.addEventListener('resize',relens,{passive:true});
+  S.after.push(relens);
 
   document.addEventListener('click',function(e){
     var l=e.target.closest('[data-l]');if(l){S.setLang(l.dataset.l);return}
-    var a=e.target.closest('[data-app]');if(a){e.preventDefault();window.open(APP_STORE_URL,'_blank','noopener');return}
     var g=e.target.closest('[data-go]');
     if(g&&document.body.dataset.page==='home'){e.preventDefault();S.go(g.dataset.go);if(g.dataset.go!=='top')history.replaceState(null,'','#'+g.dataset.go);else history.replaceState(null,'',location.pathname)}
   });

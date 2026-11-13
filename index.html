@@ -6,7 +6,6 @@
 <script>
 /* Old links such as index.html#/privacy (for example from App Store Connect) keep working. */
 (function(){function go(){var m=location.hash.match(/^#\/(privacy|terms|support)/);if(m)location.replace(m[1]+'.html')}go();addEventListener('hashchange',go)})();
-document.documentElement.classList.add('js');
 </script>
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0d14">
@@ -110,15 +109,15 @@ document.documentElement.classList.add('js');
     <div class="day-pin">
       <div class="day-head wrap">
         <div><h2 data-i18n="dayh">And the rest of your day.</h2></div>
-        <p class="lede" data-i18n="dayp">Alerts, widgets, Siri and a few stickers, for the moments between fill-ups.</p>
+        <p class="lede" data-i18n="dayp">Alerts, weather, widgets, Siri and a few stickers, for the moments between fill-ups.</p>
       </div>
       <div class="track" id="track">
         <article class="card glass" data-card="alerts">
           <div class="vis"><div class="notifs">
             <div class="nf glass"><img src="assets/img/icon.webp" alt="" width="34" height="34"><div><header><span data-i18n="n1t">Price Drop at De Lorimier</span><time data-i18n="now">now</time></header><p data-i18n="n1b">Regular — now 161.9¢ (2.0¢ lower)</p></div></div>
-            <div class="nf glass"><img src="assets/img/icon.webp" alt="" width="34" height="34"><div><header><span data-i18n="n2t">Deal Found Nearby</span><time data-i18n="m8">8 min ago</time></header><p data-i18n="n2b">Regular at Laval — 5.2¢ below the 168.2¢ average</p></div></div>
+            <div class="nf glass"><img src="assets/img/icon.webp" alt="" width="34" height="34"><div><header><span data-i18n="n2t">Deal Found Nearby</span><time data-i18n="m8">8 min ago</time></header><p data-i18n="n2b">Ultramar Regular at 163.0¢ — 5.2¢ below the 168.2¢ area average</p></div></div>
           </div></div>
-          <div class="tx"><h3 data-i18n="a1h">Price drops and nearby deals</h3><p data-i18n="a1p">Choose how big a drop matters and how far to look. Quiet hours keep your phone silent overnight.</p></div>
+          <div class="tx"><h3 data-i18n="a1h">Price drops and Scout Mode</h3><p data-i18n="a1p">Watch a station to hear when its price drops. Scout Mode looks for deals well below average as you drive, and quiet hours keep your phone silent overnight.</p></div>
         </article>
         <article class="card glass" data-card="fuel">
           <div class="vis"><div class="fuel">
@@ -127,13 +126,21 @@ document.documentElement.classList.add('js');
           </div></div>
           <div class="tx"><h3 data-i18n="f2h">Your fuel, first</h3><p data-i18n="f2p">Regular, Premium or Diesel. Choose once and StationQC leads with the price you care about.</p></div>
         </article>
+        <article class="card glass" data-card="weather">
+          <div class="vis"><div class="wx">
+            <div class="wx-now"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1 .6-7.95A5.5 5.5 0 0 1 18.2 9.6 3.25 3.25 0 0 1 17.5 16Z"/><path d="M8.5 19.5h.01M12 20.5h.01M15.5 19.5h.01"/></svg><b>−3°</b><span data-i18n="wxc">Light snow</span></div>
+            <p class="wx-meta"><span data-i18n="wxf">Feels like −8°</span><span data-i18n="wxw">Wind 18 km/h</span></p>
+            <ol class="wx-hours glass"><li><time data-i18n="wxnow">Now</time><b>−3°</b></li><li><time data-h="15">3 PM</time><b>−3°</b></li><li><time data-h="16">4 PM</time><b>−4°</b></li><li><time data-h="17">5 PM</time><b>−6°</b></li><li><time data-h="18">6 PM</time><b>−7°</b></li></ol>
+          </div></div>
+          <div class="tx"><h3 data-i18n="wxh">Weather at the pump</h3><p data-i18n="wxp">Current conditions and the next hours at every station, so you know what you’re stepping out into.</p></div>
+        </article>
         <article class="card glass" data-card="widget">
           <div class="vis"><div class="widget glass"><small data-i18n="wc">Cheapest nearby</small><b class="wp">161.9</b><p>Ultramar<span data-i18n="wd">1.2 km</span></p></div></div>
           <div class="tx"><h3 data-i18n="d1h">Prices on your Home Screen</h3><p data-i18n="d1p">Home Screen and Lock Screen widgets show the cheapest station near you.</p></div>
         </article>
         <article class="card glass" data-card="siri">
           <div class="vis"><div class="siri"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><q data-i18n="siriq">Cheapest gas near me in StationQC</q></div></div>
-          <div class="tx"><h3 data-i18n="d2h">Just ask Siri</h3><p data-i18n="d2p">Works with Siri, Shortcuts and Home Screen quick actions.</p></div>
+          <div class="tx"><h3 data-i18n="d2h">Just ask Siri</h3><p data-i18n="d2p">Ask for the cheapest gas or today’s prices. Works with Siri, Shortcuts and Home Screen quick actions.</p></div>
         </article>
         <article class="card glass" data-card="stickers">
           <div class="vis"><div class="stks"><img src="assets/img/stickers/cheapest-nearby.webp" alt="" width="128" height="128"><img src="assets/img/stickers/saved-money.webp" alt="" width="128" height="128"><img src="assets/img/stickers/road-trip.webp" alt="" width="128" height="128"></div></div>
@@ -163,9 +170,9 @@ document.documentElement.classList.add('js');
       <form class="form glass" id="beta-form" action="https://formspree.io/f/mvkaobpv" method="post" novalidate>
         <label class="field"><span data-i18n="bname">Full name</span><input name="name" type="text" autocomplete="name" maxlength="120" required></label>
         <label class="field"><span data-i18n="bemail">Email</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="190" required></label>
-        <label class="hp" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+        <!-- Formspree discards any submission that fills this hidden field. -->
+        <label class="hp" aria-hidden="true">Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label>
         <input type="hidden" name="lang" value="en">
-        <input type="hidden" name="t" value="">
         <button class="btn btn-blue send" type="submit"><span class="send-label" data-i18n="bsend">Request an invite</span><span class="spin" aria-hidden="true"></span></button>
         <p class="status" id="beta-status" role="status" aria-live="polite"></p>
         <p class="consent" data-i18n="bconsent">We use your name and email only to send TestFlight invites.</p>

@@ -72,6 +72,7 @@
     $('#fl').innerHTML=t.all.map(function(g){return '<div><h3>'+g[0]+'</h3><ul>'+g[1].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>'}).join('');
     $('#faqlist').innerHTML=t.q.map(function(q,i){return '<div class="qa"><button type="button" aria-expanded="false" aria-controls="qa'+i+'" id="qb'+i+'"><span>'+q[0]+'</span><span class="pm" aria-hidden="true"></span></button><div class="ans" id="qa'+i+'" role="region" aria-labelledby="qb'+i+'"><p>'+q[1]+'</p></div></div>'}).join('');
     $$('.wp').forEach(function(e){e.textContent=S.fmt(161.9)});
+    $$('.wx-hours time[data-h]').forEach(function(e){var h=+e.dataset.h;e.textContent=L==='fr'?h+' h':(h%12||12)+' '+(h<12?'AM':'PM')});
     paintGrade();
     sizeDevice();
   }
@@ -105,10 +106,6 @@
   /* ---------- Beta form ---------- */
   var form=$('#beta-form');
   if(form){
-    form.elements.t.value=String(Date.now());
-    /* Result of a submission made without JavaScript (Formspree redirects back here). */
-    var back=new URLSearchParams(location.search).get('beta');
-    if(back){var tt=S.t(),bs=$('#beta-status');if(back==='ok'){form.classList.add('done');bs.textContent=tt.bok}else{bs.classList.add('err');bs.textContent=back==='name'?tt.berr_name:back==='email'?tt.berr_email:back==='rate'?tt.berr_rate:tt.berr_server}}
     form.addEventListener('submit',function(e){
       e.preventDefault();
       var t=S.t(),st=$('#beta-status'),name=form.elements.name,mail=form.elements.email;
@@ -121,16 +118,14 @@
       form.classList.add('busy');form.elements.lang.value=S.lang;
       var send=$('.send',form);send.disabled=true;st.textContent='';
       fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-        .then(function(r){return r.text().then(function(txt){var data;try{data=JSON.parse(txt)}catch(x){data=null}return r.ok&&(!data||data.ok!==false)?{ok:true}:data||{ok:false,error:'server'}})})
-        .catch(function(){return {ok:false,error:'server'}})
-        .then(function(res){
+        .then(function(r){return r.ok},function(){return false})
+        .then(function(ok){
           form.classList.remove('busy');send.disabled=false;
-          if(res&&res.ok){
+          if(ok){
             if(S.MOTION){gsap.to($$('.field,.send',form),{opacity:0,y:-8,duration:.25,stagger:.04,ease:'power1.in',onComplete:function(){form.classList.add('done');st.textContent=t.bok;gsap.fromTo(st,{opacity:0,y:12,filter:'blur(6px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.9,ease:EXPO})}})}
             else{form.classList.add('done');st.textContent=t.bok}
           }else{
-            var code=res&&res.error;st.classList.add('err');
-            st.textContent=code==='name'?t.berr_name:code==='email'?t.berr_email:code==='rate'?t.berr_rate:t.berr_server;
+            st.classList.add('err');st.textContent=t.berr_server;
           }
         });
     });
@@ -441,6 +436,7 @@
       if(kind==='alerts'){var n=$$('.nf',card);gsap.set(n,{y:-24,opacity:0,scale:.96});play=function(){gsap.to(n,{y:0,opacity:1,scale:1,duration:1,stagger:.18,ease:EXPO})}}
       if(kind==='fuel'){play=function(){setOdoStr($('#odo'),S.fmt(PRICES[grade]).replace(/\d/g,'0'));requestAnimationFrame(function(){requestAnimationFrame(paintGrade)})}}
       if(kind==='widget'){var w=$('.widget',card);gsap.set(w,{scale:.86,opacity:0,y:20});play=function(){gsap.to(w,{scale:1,opacity:1,y:0,duration:1.1,ease:EXPO})}}
+      if(kind==='weather'){var wx=$$('.wx-now,.wx-meta,.wx-hours li',card);gsap.set(wx,{y:14,opacity:0});play=function(){gsap.to(wx,{y:0,opacity:1,duration:.9,stagger:.06,ease:EXPO})}}
       if(kind==='siri'){var wv=$$('.wave i',card),q=$('q',card);gsap.set(q,{opacity:0,filter:'blur(8px)'});play=function(){gsap.to(wv,{scaleY:1,duration:.3,ease:'sine.inOut',stagger:{each:.07,yoyo:true,repeat:5},onComplete:function(){gsap.to(wv,{scaleY:.25,duration:.3})}});gsap.to(q,{opacity:1,filter:'blur(0px)',duration:1,delay:.25,ease:EXPO})}}
       if(kind==='stickers'){var im=$$('img',card);gsap.set(im,{scale:.5,opacity:0});play=function(){gsap.to(im,{scale:1,opacity:1,duration:.7,stagger:.1,ease:'back.out(1.7)'})}}
       /* Cards already on screen when the row pins never cross a horizontal trigger, so they play
