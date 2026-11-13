@@ -1,4 +1,4 @@
-/* Support, privacy and terms. The legal text itself is unchanged from the original site. */
+/* Support, privacy and terms, rendered from copy.js so both languages stay in step. */
 (function(){
   'use strict';
   var S=window.SQC;if(!S)return;
