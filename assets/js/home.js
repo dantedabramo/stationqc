@@ -9,7 +9,7 @@
   G.mode=S.MOTION?'anim':'static';G.dive=0;G.end=0;G.dim=0;G.hide=0;G.go=!S.MOTION;
   var BRANDS=['Petro-Canada','Shell','Ultramar','Esso','Costco','Couche-Tard','Harnois','Irving','Crevier','Sonic','Canadian Tire','Eko'];
   /* Where each callout points on the real screenshot, in % of the screen. */
-  var AN=[[40,34],[57,48.6],[20,65],[22,79]];
+  var AN=[[40,34],[36,36],[20,65],[22,79]];
   /* Screenshots that differ between languages override their callout here. */
   var AN_L={fr:{1:[28,35]}};
   var PRICES=[161.9,188.9,177.4];
