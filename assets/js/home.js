@@ -10,6 +10,8 @@
   var BRANDS=['Petro-Canada','Shell','Ultramar','Esso','Costco','Couche-Tard','Harnois','Irving','Crevier','Sonic','Canadian Tire','Eko'];
   /* Where each callout points on the real screenshot, in % of the screen. */
   var AN=[[40,34],[57,48.6],[20,65],[22,79]];
+  /* Screenshots that differ between languages override their callout here. */
+  var AN_L={fr:{1:[28,35]}};
   var PRICES=[161.9,188.9,177.4];
   var grade=0,ctx=null,mm=null,splits=[],introDone=false,velTick=null,pinsKill=null,stageD=null,betaST=null;
   /* The globe's state is read from the timelines every frame. Scroll recalculations (opening an FAQ
@@ -66,7 +68,7 @@
     $('#tour-copy').innerHTML=t.steps.map(function(s,i){return '<div class="st" data-i="'+i+'"><h3>'+s[1]+'</h3><p>'+s[2]+'</p><img class="shot" src="assets/img/shots/'+L+'-'+s[0]+'.webp" alt="'+s[3]+'" width="780" height="1696" loading="lazy" decoding="async"></div>'}).join('')+
       '<div class="prog">'+t.slabels.map(function(n,i){return '<button type="button" data-step="'+i+'"><span>'+n+'</span><i><b></b></i></button>'}).join('')+'</div>';
     $('#scr').innerHTML=t.steps.map(function(s,i){return '<img src="assets/img/shots/'+L+'-'+s[0]+'.webp" alt="'+(i===0?s[3]:'')+'" width="780" height="1696" decoding="async" data-i="'+i+'">'}).join('');
-    $('#callouts').innerHTML=t.steps.map(function(s,i){return '<div class="co" style="--ax:'+AN[i][0]+';--ay:'+AN[i][1]+'"><span class="ln"></span><span class="dot"></span><span class="chip glass">'+s[4]+'</span></div>'}).join('');
+    $('#callouts').innerHTML=t.steps.map(function(s,i){var a=(AN_L[L]&&AN_L[L][i])||AN[i];return '<div class="co" style="--ax:'+a[0]+';--ay:'+a[1]+'"><span class="ln"></span><span class="dot"></span><span class="chip glass">'+s[4]+'</span></div>'}).join('');
     $('#nums').innerHTML=t.sts.map(function(x){return '<div><b class="odo" data-n="'+x[0]+'" aria-hidden="true"></b><span class="sr">'+x[0]+'</span><span class="lbl">'+x[1]+'</span></div>'}).join('');
     $$('#nums .odo').forEach(function(el){var n=+el.dataset.n;setOdoNum(el,n,String(n).length)});
     $('#fl').innerHTML=t.all.map(function(g){return '<div><h3>'+g[0]+'</h3><ul>'+g[1].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>'}).join('');
