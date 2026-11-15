@@ -34,4 +34,5 @@ Old links such as `index.html#/privacy` redirect to the new pages.
 
 - Feature text lives in `assets/js/copy.js`. Change English and French together.
 - `support.html`, `privacy.html` and `terms.html` also hold the English text as static HTML for readers without JavaScript. Update it when the matching `s`, `P` or `T` entries in `copy.js` change.
-- The four screenshots in `assets/img/shots/` are exported from the app (780 × 1696, WebP, English and French). Re-export them when a screen changes; the callout positions are in `AN` at the top of `assets/js/home.js`.
+- The four screenshots in `assets/img/shots/` are exported from the app (780 × 1696, WebP, English and French). Re-export them when a screen changes; the callout positions are in `AN` at the top of `assets/js/home.js` (`AN_L` overrides one for a single language).
+- `sitemap.xml` and `robots.txt` are for search engines. Update `lastmod` in `sitemap.xml` when a page changes, and add any new page to it.
