@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* Old links such as index.html#/privacy (for example from App Store Connect) keep working. */
+(function(){function go(){var m=location.hash.match(/^#\/(privacy|terms|support)/);if(m)location.replace(m[1]+'.html')}go();addEventListener('hashchange',go)})();
+</script>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0d14">
+<title>StationQC — The right stop. The right price.</title>
+<meta name="description" content="Compare fuel prices across Québec, plan your route, get price-drop alerts and find your next station. Made for iPhone. No sign-up required.">
+<link rel="canonical" href="https://stationqc.tech/">
+<meta property="og:title" content="StationQC — The right stop. The right price.">
+<meta property="og:description" content="Compare fuel prices across Québec, plan your route and get price-drop alerts. Made for iPhone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stationqc.tech/">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.143.0/build/three.module.js",
+  "three/examples/jsm/": "https://unpkg.com/three@0.143.0/examples/jsm/"
+}}
+</script>
+</head>
+<body data-page="home">
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<canvas class="globe" aria-hidden="true"></canvas>
+<div id="labels" aria-hidden="true"></div>
+
+<header class="top" id="top-bar">
+  <a class="brand" href="#top" data-go="top" aria-label="StationQC"><img src="assets/img/icon.webp" alt="" width="28" height="28"><span>StationQC</span></a>
+  <nav class="tabs glass" aria-label="Sections">
+    <span class="lens" aria-hidden="true"></span>
+    <a href="#how" data-tab="how" data-go="how"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-i18n="nhow">How it works</span></a>
+    <a href="#day" data-tab="feat" data-go="day"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span data-i18n="nfeat">Features</span></a>
+    <a href="#faq" data-tab="faq" data-go="faq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2.2-2.4 3.7"/><path d="M12 17.2h.01"/></svg><span data-i18n="nfaq">FAQ</span></a>
+    <a href="#beta" data-tab="beta" data-go="beta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17l9-10"/></svg><span data-i18n="nbeta">Beta</span></a>
+  </nav>
+  <div class="tools">
+    <div class="lang glass" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="fr" aria-pressed="false">FR</button></div>
+    <a class="pill glass" data-app href="#"><span data-i18n="getapp">Get the app</span><i class="orb" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></i></a>
+  </div>
+</header>
+
+<main id="main">
+  <!-- The night the rest of the page sits on: slides up over the Earth after the price scene, ends where the beta begins -->
+  <div class="night" aria-hidden="true"></div>
+  <!-- One pinned stage: orbit, dive into Montréal, the phone rises, the tour. The phone never moves during the tour. -->
+  <section class="stage" id="stage" aria-label="StationQC">
+    <span id="top"></span>
+    <div class="hero-copy">
+      <div class="hero-main">
+        <h1 id="hl"><span class="l1" data-i18n="h1a">The right stop.</span> <span class="l2" data-i18n="h1b">The right price.</span></h1>
+      </div>
+      <div class="hero-side">
+        <p data-i18n="sub">Compare fuel prices across Québec, find your next station, plan your route and hit the road with one less thing on your mind.</p>
+        <div class="acts">
+          <a class="badge" data-app href="#"><img src="assets/img/app-store.svg" alt="Download on the App Store" width="132" height="44"></a>
+          <a class="btn btn-glass glass" href="#how" data-go="how" data-i18n="seeit">See how it works</a>
+        </div>
+        <p class="note" data-i18n="note">Made for iPhone · No sign-up required</p>
+      </div>
+    </div>
+
+    <div class="dive-copy" aria-hidden="true"><h2><span class="d1" data-i18n="d1">From orbit to the pump.</span><span class="d2" data-i18n="d2">Every station in Québec, priced and compared.</span></h2></div>
+
+    <div class="tour" id="how">
+      <div class="tour-copy" id="tour-copy"></div>
+      <div class="device" id="device">
+        <div class="phone">
+          <div class="bezel"></div>
+          <div class="scr" id="scr"></div>
+        </div>
+        <div class="callouts" id="callouts" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prices fall, then assemble into Québec -->
+  <section class="pins" id="pins">
+    <div class="pins-stage">
+      <canvas class="pins-canvas" id="pins-canvas" aria-hidden="true"></canvas>
+      <div class="pins-copy wrap">
+        <h2 data-i18n="ph">Every price, in its place.</h2>
+        <p class="lede" data-i18n="pp">Prices from Gas Québec land on one map, and each station is colored against the ones around it.</p>
+        <p class="pins-note" data-i18n="pnote">Sample prices</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="brands" id="brands">
+    <p class="kicker" data-i18n="brandsl">Every major brand on one map</p>
+    <div class="vel" aria-hidden="true"><div class="vel-row" data-dir="1"></div><div class="vel-row" data-dir="-1"></div></div>
+    <p class="sr">Petro-Canada, Shell, Ultramar, Esso, Costco, Couche-Tard, Harnois, Irving, Crevier, Sonic, Canadian Tire, Eko</p>
+  </section>
+
+  <section class="facts wrap" id="facts">
+    <p class="stmt" id="stmt" data-i18n="stmt">Recent prices from every station in Québec, compared against the area average, so a good price is obvious before you pull in.</p>
+    <div class="nums" id="nums"></div>
+  </section>
+
+  <section class="day" id="day">
+    <div class="day-pin">
+      <div class="day-head wrap">
+        <div><h2 data-i18n="dayh">And the rest of your day.</h2></div>
+        <p class="lede" data-i18n="dayp">Alerts, weather, widgets, Siri and a few stickers, for the moments between fill-ups.</p>
+      </div>
+      <div class="track" id="track">
+        <article class="card glass" data-card="alerts">
+          <div class="vis"><div class="notifs">
+            <div class="nf glass"><img src="assets/img/icon.webp" alt="" width="34" height="34"><div><header><span data-i18n="n1t">Price Drop at De Lorimier</span><time data-i18n="now">now</time></header><p data-i18n="n1b">Regular — now 161.9¢ (2.0¢ lower)</p></div></div>
+            <div class="nf glass"><img src="assets/img/icon.webp" alt="" width="34" height="34"><div><header><span data-i18n="n2t">Deal Found Nearby</span><time data-i18n="m8">8 min ago</time></header><p data-i18n="n2b">Ultramar Regular at 163.0¢ — 5.2¢ below the 168.2¢ area average</p></div></div>
+          </div></div>
+          <div class="tx"><h3 data-i18n="a1h">Price drops and Scout Mode</h3><p data-i18n="a1p">Watch a station to hear when its price drops. Scout Mode looks for deals well below average as you drive, and quiet hours keep your phone silent overnight.</p></div>
+        </article>
+        <article class="card glass" data-card="fuel">
+          <div class="vis"><div class="fuel">
+            <div class="pump"><span class="odo" id="odo" aria-hidden="true"></span><small>¢</small><span class="sr" id="odosr"></span></div>
+            <div class="seg glass" id="seg" role="group"><i></i><button type="button" data-g="0" aria-pressed="true" data-i18n="regular">Regular</button><button type="button" data-g="1" aria-pressed="false" data-i18n="premium">Premium</button><button type="button" data-g="2" aria-pressed="false" data-i18n="diesel">Diesel</button></div>
+          </div></div>
+          <div class="tx"><h3 data-i18n="f2h">Your fuel, first</h3><p data-i18n="f2p">Regular, Premium or Diesel. Choose once and StationQC leads with the price you care about.</p></div>
+        </article>
+        <article class="card glass" data-card="weather">
+          <div class="vis"><div class="wx">
+            <div class="wx-now"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16a4 4 0 0 1 .6-7.95A5.5 5.5 0 0 1 18.2 9.6 3.25 3.25 0 0 1 17.5 16Z"/><path d="M8.5 19.5h.01M12 20.5h.01M15.5 19.5h.01"/></svg><b>−3°</b><span data-i18n="wxc">Light snow</span></div>
+            <p class="wx-meta"><span data-i18n="wxf">Feels like −8°</span><span data-i18n="wxw">Wind 18 km/h</span></p>
+            <ol class="wx-hours glass"><li><time data-i18n="wxnow">Now</time><b>−3°</b></li><li><time data-h="15">3 PM</time><b>−3°</b></li><li><time data-h="16">4 PM</time><b>−4°</b></li><li><time data-h="17">5 PM</time><b>−6°</b></li><li><time data-h="18">6 PM</time><b>−7°</b></li></ol>
+          </div></div>
+          <div class="tx"><h3 data-i18n="wxh">Weather at the pump</h3><p data-i18n="wxp">Current conditions and the next hours at every station, so you know what you’re stepping out into.</p></div>
+        </article>
+        <article class="card glass" data-card="widget">
+          <div class="vis"><div class="widget glass"><small data-i18n="wc">Cheapest nearby</small><b class="wp">161.9</b><p>Ultramar<span data-i18n="wd">1.2 km</span></p></div></div>
+          <div class="tx"><h3 data-i18n="d1h">Prices on your Home Screen</h3><p data-i18n="d1p">Home Screen and Lock Screen widgets show the cheapest station near you.</p></div>
+        </article>
+        <article class="card glass" data-card="siri">
+          <div class="vis"><div class="siri"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><q data-i18n="siriq">Cheapest gas near me in StationQC</q></div></div>
+          <div class="tx"><h3 data-i18n="d2h">Just ask Siri</h3><p data-i18n="d2p">Ask for the cheapest gas or today’s prices. Works with Siri, Shortcuts and Home Screen quick actions.</p></div>
+        </article>
+        <article class="card glass" data-card="stickers">
+          <div class="vis"><div class="stks"><img src="assets/img/stickers/cheapest-nearby.webp" alt="" width="128" height="128"><img src="assets/img/stickers/saved-money.webp" alt="" width="128" height="128"><img src="assets/img/stickers/road-trip.webp" alt="" width="128" height="128"></div></div>
+          <div class="tx"><h3 data-i18n="d3h">Eight iMessage stickers</h3><p data-i18n="d3p">For when the price at the pump needs a reaction.</p></div>
+        </article>
+      </div>
+      <div class="day-prog wrap" aria-hidden="true"><i><b id="day-bar"></b></i></div>
+    </div>
+  </section>
+
+  <section class="all wrap" id="all">
+    <h2 data-i18n="allh">Everything in the app.</h2>
+    <div class="fl" id="fl"></div>
+  </section>
+
+  <section class="faq wrap" id="faq">
+    <div class="faq-head"><h2 data-i18n="qh">Before you hit the road.</h2><a class="btn btn-glass glass" href="support.html" data-i18n="need">Need a hand?</a></div>
+    <div class="faq-list" id="faqlist"></div>
+  </section>
+
+  <section class="beta" id="beta">
+    <div class="beta-in wrap">
+      <div class="beta-copy">
+        <h2 data-i18n="bh">Try the next version first.</h2>
+        <p data-i18n="bp">Join the StationQC beta on TestFlight. Leave your name and email, and we’ll send an invite when a spot opens.</p>
+      </div>
+      <form class="form glass" id="beta-form" action="https://formspree.io/f/mvkaobpv" method="post" novalidate>
+        <label class="field"><span data-i18n="bname">Full name</span><input name="name" type="text" autocomplete="name" maxlength="120" required></label>
+        <label class="field"><span data-i18n="bemail">Email</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="190" required></label>
+        <!-- Formspree discards any submission that fills this hidden field. -->
+        <label class="hp" aria-hidden="true">Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label>
+        <input type="hidden" name="lang" value="en">
+        <button class="btn btn-blue send" type="submit"><span class="send-label" data-i18n="bsend">Request an invite</span><span class="spin" aria-hidden="true"></span></button>
+        <p class="status" id="beta-status" role="status" aria-live="polite"></p>
+        <p class="consent" data-i18n="bconsent">We use your name and email only to send TestFlight invites.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="foot"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js" defer></script>
+<script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js" defer></script>
+<script src="assets/js/copy.js" defer></script>
+<script src="assets/js/core.js" defer></script>
+<script src="assets/js/home.js" defer></script>
+<script type="module">
+/* Québec at night. One render pass, no post-processing, dithered so dark gradients cannot band.
+   Reads window.G: dive (0..1) flies from orbit into Montréal, fade hides it, end raises it again. */
+const canvas=document.querySelector('.globe');
+const G=window.G=window.G||{dive:0,end:0,dim:0,hide:0,go:true,mode:'static'};
+const bail=e=>{console.warn('Globe unavailable:',e);document.body.classList.add('no-gl')};
+const BASE='https://api.getlayers.ai/storage/v1/object/public/public/assets/ascend-d9857ad1f2';
+const ok=(()=>{try{const c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'))}catch(e){return false}})();
+if(!canvas)bail('no canvas');else if(!ok)bail('no webgl');else start().catch(bail);
+
+async function start(){
+const [THREE,{GLTFLoader},{DRACOLoader}]=await Promise.all([import('three'),import('three/examples/jsm/loaders/GLTFLoader.js'),import('three/examples/jsm/loaders/DRACOLoader.js')]);
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const small=innerWidth<=760||matchMedia('(pointer:coarse)').matches;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const ss=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)};
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const R=1.95,TILT=.37;
+let W=innerWidth,H=innerHeight,ratio=Math.min(devicePixelRatio||1,small?1.5:2);
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(ratio);renderer.setSize(W,H,false);renderer.outputEncoding=THREE.LinearEncoding;
+renderer.setClearColor(0x0b0d14,1);
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(40,W/H,.05,200);camera.position.set(0,0,8);
+const GRAIN=`float hash(vec2 p){return fract(52.9829189*fract(dot(p,vec2(.06711056,.00583715))));}`;
+const SUN=new THREE.Vector3(-.62,.66,-.42).normalize();
+
+const world=new THREE.Group();scene.add(world);
+const spin=new THREE.Group();spin.rotation.z=TILT;world.add(spin);
+
+{const n=small?420:800,p=new Float32Array(n*3),b=new Float32Array(n);for(let i=0;i<n;i++){const u=Math.random()*2-1,a=Math.random()*6.283,r=Math.sqrt(1-u*u);p[i*3]=90*r*Math.cos(a);p[i*3+1]=90*u;p[i*3+2]=90*r*Math.sin(a);b[i]=Math.pow(Math.random(),3)}
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('bright',new THREE.BufferAttribute(b,1));
+const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uR:{value:ratio}},
+ vertexShader:`attribute float bright;uniform float uR;varying float vB;void main(){vB=bright;gl_PointSize=(.9+bright*.9)*uR;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+ fragmentShader:`varying float vB;void main(){float l=length(gl_PointCoord-.5);if(l>.5)discard;gl_FragColor=vec4(vec3(.72,.78,.9)*(.1+vB*.5)*smoothstep(.5,.1,l),1.);}`});
+const s=new THREE.Points(g,m);s.frustumCulled=false;scene.add(s);}
+
+const draco=new DRACOLoader();draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.5/');
+const gltf=new GLTFLoader();gltf.setDRACOLoader(draco);
+const first=o=>{let m=null;o.traverse(c=>{if(!m&&c.isMesh)m=c});return m};
+const [lights,planet]=await Promise.all([gltf.loadAsync(BASE+'/planet-lights.glb'),gltf.loadAsync(BASE+'/planet.glb')]);
+const prep=t=>{t.encoding=THREE.LinearEncoding;t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+  if(small&&t.image&&t.image.width>2048){const c=document.createElement('canvas');c.width=c.height=2048;c.getContext('2d').drawImage(t.image,0,0,2048,2048);t.image=c}
+  t.needsUpdate=true;return t};
+const night=prep(first(lights.scene).material.map);
+const src=first(planet.scene);const day=prep(src.material.map);
+src.geometry.computeBoundingSphere();const unit=src.geometry.boundingSphere.radius;
+/* The model's axes, solved against coastal landmarks: +Y north, -Z longitude 0, -X longitude 90°E. */
+const locate=(la,lo)=>{const a=la*Math.PI/180,b=lo*Math.PI/180;return new THREE.Vector3(-Math.cos(a)*Math.sin(b),Math.sin(a),-Math.cos(a)*Math.cos(b)).multiplyScalar(unit)};
+const uQc={value:1};
+const earth=new THREE.Mesh(src.geometry,new THREE.ShaderMaterial({
+ uniforms:{map:{value:day},night:{value:night},sun:{value:SUN},qcGain:uQc},
+ vertexShader:`varying vec2 vUv;varying vec3 vN;varying vec3 vV;varying vec3 vO;void main(){vUv=uv;vO=normalize(position);vN=normalize(normalMatrix*normal);vec4 p=modelViewMatrix*vec4(position,1.);vV=-p.xyz;gl_Position=projectionMatrix*p;}`,
+ fragmentShader:`precision highp float;uniform sampler2D map;uniform sampler2D night;uniform vec3 sun;uniform float qcGain;varying vec2 vUv;varying vec3 vN;varying vec3 vV;varying vec3 vO;${GRAIN}
+ void main(){
+  vec3 n=normalize(vN),v=normalize(vV);
+  vec3 alb=texture2D(map,vUv).rgb;
+  float ndl=dot(n,sun);
+  float dayAmt=smoothstep(-.02,.42,ndl);
+  float ndv=max(dot(n,v),0.);
+  float lum=dot(alb,vec3(.3,.59,.11));
+  vec3 col=mix(vec3(lum),alb,.55)*vec3(.13,.17,.27)*(.55+.45*ndv);
+  col=mix(col,alb*vec3(.34,.40,.52),dayAmt*.8);
+  vec3 o=normalize(vO);float lat=degrees(asin(o.y));float lon=degrees(atan(-o.x,-o.z));
+  float inQc=smoothstep(44.7,45.3,lat)*smoothstep(-80.,-79.2,lon)*smoothstep(-56.,-57.,lon);
+  float l=texture2D(night,vUv).r;
+  l=pow(smoothstep(.04,1.,l),1.15);
+  col+=vec3(1.,.72,.40)*l*(1.-dayAmt)*mix(.13,1.4*qcGain,inQc);
+  float f=pow(1.-ndv,3.2);
+  col+=vec3(.14,.34,.62)*f*(.12+.62*smoothstep(-.35,.7,ndl));
+  col+=(hash(gl_FragCoord.xy)-.5)*3./255.;
+  gl_FragColor=vec4(col,1.);
+ }`}));
+earth.scale.setScalar(R/unit);spin.add(earth);
+
+const air=new THREE.Mesh(new THREE.SphereGeometry(R*1.075,96,96),new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.BackSide,blending:THREE.AdditiveBlending,uniforms:{sun:{value:SUN}},
+ vertexShader:`varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+ fragmentShader:`precision highp float;uniform vec3 sun;varying vec3 vN;${GRAIN}
+ void main(){vec3 n=normalize(vN);float a=pow(smoothstep(0.,.36,-n.z),2.6);
+  float s=smoothstep(-.6,.95,dot(normalize(n.xy+1e-5),normalize(sun.xy)));
+  vec3 c=vec3(.17,.40,.72)*a*(.06+.5*s);
+  float g=hash(gl_FragCoord.xy);gl_FragColor=vec4(c+(g-.5)*3./255.*step(.001,a),1.);}`}));
+world.add(air);
+
+const CITY=[[45.50,-73.57],[46.81,-71.21],[45.48,-75.70],[45.40,-71.89],[46.35,-72.55],[48.43,-71.07],[48.45,-68.52],[45.88,-72.48],[45.78,-74.00],[48.24,-79.02],[48.10,-77.78],[50.22,-66.38],[49.22,-68.15],[48.83,-64.48],[48.55,-71.65],[49.92,-74.37],[48.85,-67.53],[46.55,-75.50],[46.05,-71.96],[47.84,-69.53],[47.44,-72.78],[46.10,-71.30],[46.12,-70.67],[46.03,-73.44],[46.57,-72.75],[48.57,-78.12],[50.03,-66.87]];
+const uT={value:0},uPt={value:1};
+{const p=[],s=[];CITY.forEach(([a,o])=>{const v=locate(a,o).multiplyScalar(1.006);p.push(v.x,v.y,v.z);s.push(Math.random())});
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.setAttribute('seed',new THREE.Float32BufferAttribute(s,1));
+const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{t:uT,uR:{value:ratio},pt:uPt},
+ vertexShader:`attribute float seed;uniform float uR;uniform float pt;varying float vS;varying float vF;void main(){vS=seed;vec4 mv=modelViewMatrix*vec4(position,1.);vF=smoothstep(.15,.5,dot(normalize(normalMatrix*normalize(position)),normalize(-mv.xyz)));gl_PointSize=22.*uR*pt;gl_Position=projectionMatrix*mv;}`,
+ fragmentShader:`uniform float t;varying float vS;varying float vF;void main(){float d=length(gl_PointCoord-.5)*2.;if(d>1.)discard;float c=smoothstep(.16,.04,d);float ph=fract(t*.14+vS);float r=smoothstep(.05,0.,abs(d-ph))*(1.-ph)*.32;gl_FragColor=vec4(vec3(1.,.74,.42)*(c+r)*vF,1.);}`});
+const pts=new THREE.Points(g,m);pts.frustumCulled=false;earth.add(pts);}
+
+/* Hero pose faces Québec; dive pose puts Montréal dead centre. */
+const qc=locate(47.3,-72).multiplyScalar(R/unit);
+const YAW0=Math.atan2(-qc.x,qc.z)-.06,PITCH0=.3;
+const mtl=locate(45.50,-73.57).multiplyScalar(R/unit);
+const v1=mtl.clone().applyEuler(new THREE.Euler(0,0,TILT));
+const YAW1=Math.atan2(-v1.x,v1.z);
+const v2=v1.clone().applyEuler(new THREE.Euler(0,YAW1,0));
+const PITCH1=Math.atan2(v2.y,v2.z);
+let dYaw=YAW1-YAW0;dYaw=Math.atan2(Math.sin(dYaw),Math.cos(dYaw));
+/* Where a latitude/longitude is on screen right now, so the page's price pins can sit on real places. */
+const pv=new THREE.Vector3();
+G.project=(la,lo)=>{pv.copy(locate(la,lo)).multiplyScalar(1.004);earth.localToWorld(pv);pv.project(camera);return [(pv.x+1)/2*innerWidth,(1-pv.y)/2*innerHeight]};
+
+const box=document.getElementById('labels');
+const NAMES=[['Rouyn-Noranda',48.24,-79.02,34,-1],['Montréal',45.50,-73.57,112,-1],['Québec',46.81,-71.21,38,1],['Saguenay',48.43,-71.07,74,1],['Gaspé',48.83,-64.48,36,1]];
+const tags=box?NAMES.map(([n,la,lo,h,dir])=>{const d=document.createElement('div');d.className='lb'+(dir<0?' left':'');d.style.setProperty('--h',h+'px');d.innerHTML=`<i></i><span>${n}</span>`;box.appendChild(d);return {d,p:locate(la,lo).multiplyScalar(1.006)}}):[];
+const v3=new THREE.Vector3(),n3=new THREE.Vector3();
+
+let entry=reduced?1:0,last=performance.now(),t0=0,lastOp=-1,ready=false,appear=reduced?1:0,lastSh=0;
+/* The globe leans a little toward the cursor, with a lag, so it feels held rather than fixed. */
+const ptr={x:0,y:0,sx:0,sy:0};
+addEventListener('pointermove',e=>{ptr.x=e.clientX/innerWidth*2-1;ptr.y=e.clientY/innerHeight*2-1},{passive:true});
+const anim=()=>G.mode==='anim';
+function step(dt){
+ const vh=innerHeight;
+ if(entry<1&&(G.go||!anim()))entry=Math.min(1,entry+dt/2.2);
+ const rise=1-Math.pow(1-entry,3);
+ const narrow=clamp((W-560)/700,0,1),side=.95*narrow;
+ const end=anim()?clamp(G.end||0,0,1):0;
+ const map=anim()&&end<=0?clamp(G.map||0,0,1):0;
+ // The price scene is the dive played backwards: the camera pulls out of Montréal to the hero's orbit.
+ const dive=anim()&&end<=0?Math.min(clamp(G.dive||0,0,1),1-map):0;
+ const a=ease(ss(0,.72,dive)),b=ease(ss(.08,1,dive));
+ let x,y,s,pitch,yaw,camZ;
+ const low=W<=760?.75:0; // phones: keep the globe below the hero copy
+ if(end>0){const e=ss(0,1,end);x=side;y=-9+(4.95-low)*e;s=2.15;pitch=PITCH0;yaw=YAW0;camZ=8}
+ else{
+  x=side*(1-a);y=(-4.05-low-2.6*(1-rise))*(1-a);s=2.15+(1-2.15)*a;
+  pitch=PITCH0+(PITCH1-PITCH0)*a;yaw=YAW0+dYaw*a;camZ=8+(R+2.1-8)*b; // stops higher over Montréal so the region, not a few blocks, fills the frame
+  if(map>0&&W<=760)y+=1.05*ss(0,1,map); // phones: settle higher than the hero so Québec clears the tab bar
+ }
+ // After the price scene unpins, shift the view by exactly the page's scroll, so the Earth leaves with the page.
+ const sh=map>0?Math.round(G.shift||0):0;
+ if(sh!==lastSh){if(sh>0)camera.setViewOffset(W,H,0,sh,W,H);else camera.clearViewOffset();lastSh=sh}
+ world.position.set(x,y,0);world.scale.setScalar(s);
+ camera.position.z=camZ;
+ t0+=dt;
+ ptr.sx+=(ptr.x-ptr.sx)*Math.min(1,dt*2.5);ptr.sy+=(ptr.y-ptr.sy)*Math.min(1,dt*2.5);
+ const lean=reduced||map>0?0:(1-a);
+ spin.rotation.x=pitch+ptr.sy*.07*lean;spin.rotation.y=yaw+(reduced?0:Math.sin(t0*.05)*.035*(1-a))+ptr.sx*.11*lean;
+ uT.value=t0;uQc.value=map>0?1:1+.9*b;uPt.value=map>0?0:1-.6*b;
+ scene.updateMatrixWorld();
+ presence();
+ const op=lastOp;
+ if(box){
+  const show=W>760&&rise>.82&&H>460&&((end<=0&&dive<.015&&window.scrollY<vh*.6)||end>.88);
+  box.classList.toggle('on',show);
+  if(show)tags.forEach(t=>{v3.copy(t.p);earth.localToWorld(v3);n3.copy(v3).sub(world.position).normalize();const face=n3.dot(v3.clone().negate().add(camera.position).normalize());v3.project(camera);const px=(v3.x+1)/2*innerWidth,py=(1-v3.y)/2*innerHeight;t.d.style.transform=`translate3d(${px.toFixed(1)}px,${py.toFixed(1)}px,0)`;t.d.style.visibility=(face>.25&&px>70&&px<innerWidth-70)?'visible':'hidden'});
+ }
+ if(op>0)renderer.render(scene,camera);
+ if(!ready){ready=true;G.ready=true;window.dispatchEvent(new Event('globe:ready'))}
+}
+function needed(){
+ if(document.hidden)return false;
+ if(entry<1)return true;
+ if(!anim())return window.scrollY<innerHeight*1.05;
+ // Once the lights have softened behind the phone the frame holds still, so it costs nothing.
+ return (G.end||0)>0||(G.map||0)>0||((G.dim||0)<.999&&(G.hide||0)<1);
+}
+let raf=0;
+function presence(){
+ // Applied every frame, even when nothing renders, so a fast jump can never leave the canvas half-visible.
+ // Dimming is opacity only: a CSS blur on a full-screen WebGL canvas costs a full-screen repaint every frame.
+ const end=anim()?clamp(G.end||0,0,1):0,m=clamp(G.dim||0,0,1),h=clamp(G.hide||0,0,1),mp=anim()?clamp(G.map||0,0,1):0;
+ const op=Math.round((end>0?1:Math.max(mp,1-.66*m)*(1-h))*appear*100)/100;
+ if(op!==lastOp){canvas.style.opacity=op;lastOp=op}
+ if(op===0&&box)box.classList.remove('on');
+}
+function loop(now){raf=requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;if(appear<1)appear=Math.min(1,appear+dt/1.1);presence();if(needed())step(dt)}
+if(reduced){step(.016);addEventListener('scroll',()=>{if(window.scrollY<innerHeight)step(.016)},{passive:true})}else raf=requestAnimationFrame(loop);
+document.addEventListener('visibilitychange',()=>{last=performance.now()});
+let lw=W;addEventListener('resize',()=>{if(matchMedia('(pointer:coarse)').matches&&innerWidth===lw)return;lw=W=innerWidth;H=innerHeight;lastSh=-1;camera.aspect=W/H;camera.updateProjectionMatrix();renderer.setSize(W,H,false);if(reduced)step(.016)},{passive:true});
+window.__globe=true;
+}
+</script>
+</body>
+</html>
