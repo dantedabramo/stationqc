@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["KSWNYDHTKK.com.dantedabramo.StationQC"],
+        "components": [
+          { "/": "/station", "comment": "Shared station links" },
+          { "/": "/station/*", "comment": "Shared station links with a trailing path" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StationQC</title>
+  <meta name="apple-itunes-app" content="app-id=6816491796">
+  <meta property="og:title" content="StationQC">
+  <meta property="og:description" content="Prix de l’essence en direct au Québec · Live gas prices in Québec">
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", system-ui, sans-serif; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: Canvas; color: CanvasText; }
+    main { max-width: 420px; padding: 32px 24px; text-align: center; }
+    h1 { font-size: 1.6rem; margin: 0 0 8px; }
+    p { opacity: 0.75; line-height: 1.45; margin: 0 0 24px; }
+    a.button { display: inline-block; padding: 14px 22px; border-radius: 14px; background: #003DA5; color: #fff; text-decoration: none; font-weight: 700; }
+    a.secondary { display: block; margin-top: 16px; color: inherit; opacity: 0.7; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="title">StationQC</h1>
+    <p id="message">Voyez le prix de cette station en direct dans StationQC.<br>See this station’s live price in StationQC.</p>
+    <a class="button" href="https://apps.apple.com/app/id6816491796">Télécharger StationQC · Get StationQC</a>
+    <a class="secondary" id="open" href="#">Ouvrir dans l’app · Open in the app</a>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const name = params.get("name");
+    if (name) {
+      document.getElementById("title").textContent = name;
+      document.title = name + " · StationQC";
+    }
+    const id = params.get("id");
+    const appLink = new URL("stationqc://station");
+    for (const key of ["id", "lat", "lng", "name"]) {
+      const value = params.get(key);
+      if (value) appLink.searchParams.set(key, value);
+    }
+    const open = document.getElementById("open");
+    if (id) {
+      open.href = appLink.toString();
+      document.querySelector('meta[name="apple-itunes-app"]').content = "app-id=6816491796, app-argument=" + location.href;
+    } else {
+      open.remove();
+    }
+  </script>
+</body>
+</html>
